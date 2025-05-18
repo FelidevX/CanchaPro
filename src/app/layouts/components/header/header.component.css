@@ -1,0 +1,10 @@
+.navbar-brand img {
+    height: 60px;
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+
+.navbar {
+    background-color: #ffffff; 
+}
+
