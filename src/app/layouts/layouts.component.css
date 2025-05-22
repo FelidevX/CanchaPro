@@ -6,14 +6,13 @@
 
 .hero-section {
     flex: 1;
-    background-image: url('assets/hero-bg.jpg'); /* Aquí colocarás tu imagen */
+    background-image: url('assets/hero-bg.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
 }
 
-/* Opcional: Overlay para mejorar la legibilidad del contenido */
 .hero-section::before {
     content: '';
     position: absolute;
@@ -21,5 +20,5 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según necesites */
+    background-color: rgba(0, 0, 0, 0.5);
 } 
