@@ -18,8 +18,13 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Jugadores</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Sobre Nosotros</a>
+          <li class="nav-item ms-2">
+            <button *ngIf="!isAuthenticated" class="btn btn-primary" (click)="onLogin()">
+              Iniciar Sesión
+            </button>
+            <button *ngIf="isAuthenticated" class="btn btn-outline-danger" (click)="onLogout()">
+              Cerrar Sesión
+            </button>
           </li>
         </ul>
       </div>
