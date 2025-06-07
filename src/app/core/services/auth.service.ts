@@ -88,6 +88,7 @@ export class AuthService {
   setSession(token: string, user: User): void {
     localStorage.setItem('access_token', token);
     localStorage.setItem('user_role', user.role);
+    localStorage.setItem('user_id', user.id.toString());
     this.currentUserSubject.next(user);
   }
 }

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { CallbackComponent } from './layouts/components/callback/callback.compon
 import { LoginComponent } from './layouts/components/login/login.component';
 import { RegisterComponent } from './layouts/components/register/register.component';
 import { AuthLayoutComponent } from './layouts/components/auth-layout/auth-layout.component';
+import { DashboardComponent } from './layouts/components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -27,14 +29,16 @@ import { AuthLayoutComponent } from './layouts/components/auth-layout/auth-layou
     CallbackComponent,
     LoginComponent,
     RegisterComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

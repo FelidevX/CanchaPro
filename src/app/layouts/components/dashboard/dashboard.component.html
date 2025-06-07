@@ -1,0 +1,119 @@
+<div class="d-flex" style="min-height: 100vh;">
+  <!-- Sidebar -->
+  <div class="bg-dark text-white p-3" style="width: 250px;">
+    <h4 class="mb-4"><a [routerLink]="['/']" class="text-white text-decoration-none">CanchaPRO</a></h4>
+
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="mostrarCrearCancha()">
+          <i class="bi bi-plus-circle me-2"></i> Crear cancha
+        </button>
+      </li>
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="mostrarVerCanchas()">
+          <i class="bi bi-eye me-2"></i> Ver canchas
+        </button>
+      </li>
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="mostrarAdministrar()">
+          <i class="bi bi-gear me-2"></i> Administrar
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex-grow-1 p-4 bg-light">
+    <ng-container *ngIf="mostrarFormularioCrear">
+      <!-- Formulario Crear Cancha -->
+      <h3>Crear nueva cancha</h3>
+      <form (ngSubmit)="guardarCancha()" #canchaForm="ngForm">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre de la cancha</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tamal Soccer..." [(ngModel)]="cancha.nombre" required>
+        </div>
+        <div class="mb-3">
+          <label for="ubicacion" class="form-label">Ubicación</label>
+          <input type="text" class="form-control" id="ubicacion" name="direccion" placeholder="Avenida Collin 1972..." [(ngModel)]="cancha.direccion" required>
+        </div>
+        <div class="mb-3">
+          <label for="precio" class="form-label">Precio por hora</label>
+          <input type="number" class="form-control" id="precio" name="precio" placeholder="1000..." [(ngModel)]="cancha.precio" required>
+        </div>
+        <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingresar descripción..." [(ngModel)]="cancha.descripcion" required>
+        </div>
+        <button type="submit" class="btn btn-success">Guardar Cancha</button>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="mostrarCanchas">
+      <h3>Mis canchas</h3>
+      <div *ngIf="canchasUsuario.length === 0">No tienes canchas registradas.</div>
+      <div class="col-md-4 mb-3" *ngFor="let cancha of canchasUsuario">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{cancha.nombre}}</h5>
+            <p class="card-text">{{cancha.direccion}}</p>
+            <p class="card-text">{{cancha.precio | currency:'CLP':'symbol':'1.0-0'}} / hora</p>
+            <p class="card-text">{{cancha.descripcion}}</p>
+                  <button class="btn btn-primary btn-sm mt-2" (click)="editarCancha(cancha)">Editar</button>
+                  <button class="btn btn-danger btn-sm mt-2 ms-2" (click)="abrirModalEliminar(cancha)">Eliminar</button>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="mostrarFormularioEditar">
+  <h3>Editar cancha</h3>
+  <form (ngSubmit)="guardarEdicionCancha()" #editarForm="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Nombre de la cancha</label>
+      <input type="text" class="form-control" [(ngModel)]="canchaEditando.nombre" name="nombre" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Ubicación</label>
+      <input type="text" class="form-control" [(ngModel)]="canchaEditando.direccion" name="direccion" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Precio por hora</label>
+      <input type="number" class="form-control" [(ngModel)]="canchaEditando.precio" name="precio" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Descripción</label>
+      <input type="text" class="form-control" [(ngModel)]="canchaEditando.descripcion" name="descripcion" required>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="cancelarEdicion()">Cancelar</button>
+  </form>
+</ng-container>
+
+    <ng-container *ngIf="mostrarAdministracion">
+      <h3>Panel de administración</h3>
+      <p>Desde aquí podrás editar o eliminar canchas existentes.</p>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Modal de confirmación de eliminación -->
+<div class="modal fade" id="modalEliminarCancha" tabindex="-1" aria-labelledby="modalEliminarCanchaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEliminarCanchaLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar la cancha <strong>{{canchaAEliminar?.nombre}}</strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarCanchaConfirmada()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
