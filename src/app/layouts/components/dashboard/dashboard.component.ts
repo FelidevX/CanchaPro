@@ -25,7 +25,6 @@ export class DashboardComponent {
    constructor(private canchaService: CanchaService) {}
 
   mostrarFormularioCrear = true;
-  mostrarAdministracion = false;
   mostrarCanchas = false;
   mostrarFormularioEditar = false;
   
@@ -101,14 +100,12 @@ export class DashboardComponent {
 
   mostrarCrearCancha() {
     this.mostrarFormularioCrear = true;
-    this.mostrarAdministracion = false;
     this.mostrarCanchas = false;
     this.mostrarFormularioEditar = false;
   }
 
   mostrarVerCanchas() {
     this.mostrarFormularioCrear = false;
-    this.mostrarAdministracion = false;
     this.mostrarFormularioEditar = false;
     this.mostrarCanchas = true;
     this.canchaService.obtenerCanchasPorDueno(this.usuarioId).subscribe({
@@ -117,9 +114,4 @@ export class DashboardComponent {
     })
   }
 
-  mostrarAdministrar() {
-    this.mostrarFormularioCrear = false;
-    this.mostrarAdministracion = true;
-    this.mostrarCanchas = false;
-  }
 }

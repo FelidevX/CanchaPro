@@ -13,13 +13,7 @@
       <li class="nav-item mb-2">
         <button class="btn btn-link text-white text-start w-100"
                 (click)="mostrarVerCanchas()">
-          <i class="bi bi-eye me-2"></i> Ver canchas
-        </button>
-      </li>
-      <li class="nav-item mb-2">
-        <button class="btn btn-link text-white text-start w-100"
-                (click)="mostrarAdministrar()">
-          <i class="bi bi-gear me-2"></i> Administrar
+          <i class="bi bi-eye me-2"></i> Mis canchas
         </button>
       </li>
     </ul>
@@ -90,12 +84,7 @@
     <button type="submit" class="btn btn-success">Guardar cambios</button>
     <button type="button" class="btn btn-secondary ms-2" (click)="cancelarEdicion()">Cancelar</button>
   </form>
-</ng-container>
-
-    <ng-container *ngIf="mostrarAdministracion">
-      <h3>Panel de administración</h3>
-      <p>Desde aquí podrás editar o eliminar canchas existentes.</p>
-    </ng-container>
+  </ng-container>
   </div>
 </div>
 
