@@ -25,5 +25,9 @@ export class CanchaService {
 
   actualizarCancha(cancha: any) {
   return this.http.put(`${this.apiUrl}/${cancha.id}`, cancha);
-}
+  }
+
+  eliminarCancha(id: number) {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

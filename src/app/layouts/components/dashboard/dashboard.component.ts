@@ -13,12 +13,14 @@ export class DashboardComponent {
     direccion: '',
     precio: null,
     descripcion: '',
+    rating: 0.0,
     id_dueno: Number(localStorage.getItem('user_id'))
   }
 
   canchasUsuario: any[] = [];
   usuarioId: number = Number(localStorage.getItem('user_id'));
   canchaEditando: any = null;
+  canchaAEliminar: any = null;
 
    constructor(private canchaService: CanchaService) {}
 
@@ -40,6 +42,7 @@ export class DashboardComponent {
           direccion: '',
           precio: null,
           descripcion: '',
+          rating: 0.0,
           id_dueno: Number(localStorage.getItem('user_id'))
         }
       },
@@ -58,7 +61,7 @@ export class DashboardComponent {
   }
 
   guardarEdicionCancha() {
-  this.canchaService.actualizarCancha(this.canchaEditando).subscribe({
+    this.canchaService.actualizarCancha(this.canchaEditando).subscribe({
     next: () => {
       // Actualiza la lista de canchas
       this.mostrarVerCanchas();
@@ -66,14 +69,35 @@ export class DashboardComponent {
       this.canchaEditando = null;
     },
     error: (err) => console.error('Error al actualizar cancha', err)
-  });
-}
+    });
+  }
 
-cancelarEdicion() {
-  this.mostrarFormularioEditar = false;
-  this.canchaEditando = null;
-  this.mostrarCanchas = true;
-}
+  cancelarEdicion() {
+    this.mostrarFormularioEditar = false;
+    this.canchaEditando = null;
+    this.mostrarCanchas = true;
+  }
+
+  abrirModalEliminar(cancha: any) {
+    console.log('Abriendo modal para:', cancha);
+    this.canchaAEliminar = cancha;
+    const modal = new (window as any).bootstrap.Modal(document.getElementById('modalEliminarCancha'));
+    modal.show();
+  }
+
+  eliminarCanchaConfirmada() {
+    if (!this.canchaAEliminar) return;
+    this.canchaService.eliminarCancha(this.canchaAEliminar.id).subscribe({
+      next: () => {
+        this.canchaAEliminar = null;
+        this.mostrarVerCanchas();
+      },
+      error: (err) => {
+        alert('Error al eliminar la cancha');
+        console.error(err);
+      }
+    });
+  }
 
   mostrarCrearCancha() {
     this.mostrarFormularioCrear = true;
