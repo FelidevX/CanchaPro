@@ -16,10 +16,16 @@ export class DashboardComponent {
     id_dueno: Number(localStorage.getItem('user_id'))
   }
 
+  canchasUsuario: any[] = [];
+  usuarioId: number = Number(localStorage.getItem('user_id'));
+  canchaEditando: any = null;
+
    constructor(private canchaService: CanchaService) {}
 
   mostrarFormularioCrear = true;
   mostrarAdministracion = false;
+  mostrarCanchas = false;
+  mostrarFormularioEditar = false;
   
   guardarCancha() {
   
@@ -44,13 +50,52 @@ export class DashboardComponent {
     })
   }
 
+  editarCancha(cancha: any) {
+  this.canchaEditando = { ...cancha }; // Copia para editar
+  this.mostrarFormularioEditar = true;
+  this.mostrarFormularioCrear = false;
+  this.mostrarCanchas = false;
+  }
+
+  guardarEdicionCancha() {
+  this.canchaService.actualizarCancha(this.canchaEditando).subscribe({
+    next: () => {
+      // Actualiza la lista de canchas
+      this.mostrarVerCanchas();
+      this.mostrarFormularioEditar = false;
+      this.canchaEditando = null;
+    },
+    error: (err) => console.error('Error al actualizar cancha', err)
+  });
+}
+
+cancelarEdicion() {
+  this.mostrarFormularioEditar = false;
+  this.canchaEditando = null;
+  this.mostrarCanchas = true;
+}
+
   mostrarCrearCancha() {
     this.mostrarFormularioCrear = true;
     this.mostrarAdministracion = false;
+    this.mostrarCanchas = false;
+    this.mostrarFormularioEditar = false;
+  }
+
+  mostrarVerCanchas() {
+    this.mostrarFormularioCrear = false;
+    this.mostrarAdministracion = false;
+    this.mostrarFormularioEditar = false;
+    this.mostrarCanchas = true;
+    this.canchaService.obtenerCanchasPorDueno(this.usuarioId).subscribe({
+      next: (data) => this.canchasUsuario = data,
+      error: (err) => console.error('Error al obtener las canchas del usuario:', err)
+    })
   }
 
   mostrarAdministrar() {
     this.mostrarFormularioCrear = false;
     this.mostrarAdministracion = true;
+    this.mostrarCanchas = false;
   }
 }

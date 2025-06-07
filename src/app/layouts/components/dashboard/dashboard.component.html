@@ -12,6 +12,12 @@
       </li>
       <li class="nav-item mb-2">
         <button class="btn btn-link text-white text-start w-100"
+                (click)="mostrarVerCanchas()">
+          <i class="bi bi-eye me-2"></i> Ver canchas
+        </button>
+      </li>
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
                 (click)="mostrarAdministrar()">
           <i class="bi bi-gear me-2"></i> Administrar
         </button>
@@ -43,6 +49,47 @@
         <button type="submit" class="btn btn-success">Guardar Cancha</button>
       </form>
     </ng-container>
+
+    <ng-container *ngIf="mostrarCanchas">
+      <h3>Mis canchas</h3>
+      <div *ngIf="canchasUsuario.length === 0">No tienes canchas registradas.</div>
+      <div class="col-md-4 mb-3" *ngFor="let cancha of canchasUsuario">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{cancha.nombre}}</h5>
+            <p class="card-text">{{cancha.direccion}}</p>
+            <p class="card-text">{{cancha.precio | currency:'CLP':'symbol':'1.0-0'}} / hora</p>
+            <p class="card-text">{{cancha.descripcion}}</p>
+                  <button class="btn btn-primary btn-sm mt-2" (click)="editarCancha(cancha)">Editar</button>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="mostrarFormularioEditar">
+  <h3>Editar cancha</h3>
+  <form (ngSubmit)="guardarEdicionCancha()" #editarForm="ngForm">
+    <div class="mb-3">
+      <label class="form-label">Nombre de la cancha</label>
+      <input type="text" class="form-control" [(ngModel)]="canchaEditando.nombre" name="nombre" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Ubicación</label>
+      <input type="text" class="form-control" [(ngModel)]="canchaEditando.direccion" name="direccion" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Precio por hora</label>
+      <input type="number" class="form-control" [(ngModel)]="canchaEditando.precio" name="precio" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Descripción</label>
+      <input type="text" class="form-control" [(ngModel)]="canchaEditando.descripcion" name="descripcion" required>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="cancelarEdicion()">Cancelar</button>
+  </form>
+</ng-container>
 
     <ng-container *ngIf="mostrarAdministracion">
       <h3>Panel de administración</h3>

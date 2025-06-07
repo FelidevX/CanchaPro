@@ -18,4 +18,12 @@ export class CanchaService {
   obtenerCanchas(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  obtenerCanchasPorDueno(id_dueno: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/dueno/${id_dueno}`);
+  }
+
+  actualizarCancha(cancha: any) {
+  return this.http.put(`${this.apiUrl}/${cancha.id}`, cancha);
+}
 }
