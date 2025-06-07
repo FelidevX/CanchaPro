@@ -14,4 +14,8 @@ export class CanchaService {
   crearCancha(cancha: any): Observable<any> {
     return this.http.post(this.apiUrl, cancha);
   }
+
+  obtenerCanchas(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }

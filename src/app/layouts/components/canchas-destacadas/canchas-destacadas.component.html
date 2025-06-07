@@ -6,17 +6,17 @@
     </div>
 
     <div class="row g-4">
-        <div class="col-12 col-md-6 col-lg-4" *ngFor="let cancha of canchas">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let cancha of canchas | slice:0:3">
             <div class="card h-100 shadow-sm rounded-4 border-0">
                 <!-- Imagen -->
                 <div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
-                    <i class="bi bi-image fs-1 text-muted"></i>
+                    <img src="assets/cancha.jpg" alt="Cancha" style="max-height: 100%; max-width: 100%;">
                 </div>
 
                 <!-- Contenido -->
                 <div class="card-body">
                     <h5 class="card-title fw-bold">{{cancha.nombre}}</h5>
-                    <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i>{{cancha.ubicacion}}</p>
+                    <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i>{{cancha.direccion}}</p>
 
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="fw-semibold">{{cancha.precio | currency: 'CLP':'symbol':'1.0-0'}} / hora</span>
