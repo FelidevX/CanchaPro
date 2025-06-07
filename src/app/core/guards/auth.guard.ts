@@ -10,7 +10,6 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
   const token = localStorage.getItem('access_token');
   const role = localStorage.getItem('user_role');
-  console.log('TOKEN:', token, 'ROLE:', role); // <-- Agrega esto
   if (token && role) {
     if (role === 'dueno') {
       return true;

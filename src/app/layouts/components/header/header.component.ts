@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logoPath = 'assets/LogoCanchaPRO.png';
   isAuthenticated = false;
   private authSubscription: Subscription = new Subscription();
+  usuarioRol: string = localStorage.getItem('user_role') || '';
 
   constructor(
     private authService: AuthService,
