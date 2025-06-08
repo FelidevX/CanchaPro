@@ -36,7 +36,26 @@
               {{ cancha.rating || '4.5' }}
             </span>
           </div>
-          <button class="btn btn-outline-primary w-100 mt-3">Reservar</button>
+          <button class="btn btn-outline-primary w-100 mt-3" (click)="abrirReserva(cancha)">Reservar</button>
+
+          <div *ngIf="canchaSeleccionada === cancha" class="mt-3 border rounded p-3 bg-light">
+            <form (ngSubmit)="reservar()">
+              <div class="mb-2">
+                <label>Fecha:</label>
+                <input type="date" class="form-control" [(ngModel)]="reserva.fecha" name="fecha" required>
+              </div>
+              <div class="mb-2">
+                <label>Hora inicio:</label>
+                <input type="time" class="form-control" [(ngModel)]="reserva.hora_inicio" name="hora_inicio" required>
+              </div>
+              <div class="mb-2">
+                <label>Hora fin:</label>
+                <input type="time" class="form-control" [(ngModel)]="reserva.hora_fin" name="hora_fin" required>
+              </div>
+              <button type="submit" class="btn btn-success">Confirmar reserva</button>
+              <button type="button" class="btn btn-link" (click)="cerrarReserva()">Cancelar</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
