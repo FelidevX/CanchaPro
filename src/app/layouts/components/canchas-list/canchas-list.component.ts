@@ -19,10 +19,15 @@ export class CanchasListComponent implements OnInit{
     id_cancha: 0,
     estado: 'ocupado'
   }
+  usuarioLogueado: boolean = false;
 
   constructor(private canchaService: CanchaService, private reservaService: ReservaService){}
 
   abrirReserva(cancha: any): void {
+    if(!this.usuarioLogueado) {
+      alert('Debes iniciar sesión para reservar una cancha.');
+      return;
+    }
     this.canchaSeleccionada = cancha;
     this.reserva = {
       fecha: '',
@@ -39,6 +44,11 @@ export class CanchasListComponent implements OnInit{
   }
 
   reservar() {
+    if (!this.usuarioLogueado) {
+      alert('Debes iniciar sesión para realizar una reserva.');
+      return;
+    }
+
     if (!this.reserva.fecha) {
       alert('Debes seleccionar una fecha.');
       return;
@@ -108,7 +118,8 @@ export class CanchasListComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.canchaService.obtenerCanchas().subscribe({
+    this.usuarioLogueado = !!localStorage.getItem('access_token');
+    this.canchaService.obtenerCanchas().subscribe({
         next: (data) => this.canchas = data,
         error: (err) => console.error('Error al obtener las canchas:', err)
       });
