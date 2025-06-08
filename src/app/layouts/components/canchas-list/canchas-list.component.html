@@ -1,0 +1,64 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>{{ canchas.length|| 0 }} canchas disponibles</h2>
+    <div>
+      <button class="btn btn-outline-secondary me-2">
+        <i class="bi bi-funnel"></i> Filtros
+      </button>
+      <select class="form-select d-inline-block w-auto">
+        <option>Relevancia</option>
+        <option>Precio</option>
+        <option>Rating</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let cancha of canchas">
+      <div class="card h-100">
+        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height:180px; overflow:hidden;">
+          <img src="assets/cancha.jpg" alt="Foto de cancha" style="height:100%; width:100%; object-fit:cover;">
+        </div>
+        <div class="card-body">
+          <span class="badge bg-light text-dark position-absolute" style="top:10px; right:10px;">Fútbol 6
+          </span>
+          <h5 class="card-title mt-2">{{ cancha.nombre }}</h5>
+          <p class="mb-1 text-muted"><i class="bi bi-geo-alt"></i> {{ cancha.direccion }}</p>
+          <div class="mb-2">
+            <span class="badge bg-light border me-1 text-black">Iluminación</span>
+            <span class="badge bg-light border me-1 text-black">Estacionamiento</span>
+            <span class="badge bg-light border me-1 text-black">Vestuarios</span>
+            <span *ngIf="cancha.cafeteria" class="badge bg-light border me-1">Cafetería</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="fw-bold">{{ cancha.precio | currency:'CLP':'symbol':'1.0-0' }} / hora</span>
+            <span>
+              <i class="bi bi-star-fill text-warning"></i>
+              {{ cancha.rating || '4.5' }}
+            </span>
+          </div>
+          <button class="btn btn-outline-primary w-100 mt-3" (click)="abrirReserva(cancha)" [disabled]="!usuarioLogueado">Reservar</button>
+          <div *ngIf="!usuarioLogueado" class="text-danger small mt-2">Debes iniciar sesión para reservar una cancha.</div>
+
+          <div *ngIf="canchaSeleccionada === cancha" class="mt-3 border rounded p-3 bg-light">
+            <form (ngSubmit)="reservar()">
+              <div class="mb-2">
+                <label>Fecha:</label>
+                <input type="date" class="form-control" [(ngModel)]="reserva.fecha" name="fecha" required>
+              </div>
+              <div class="mb-2">
+                <label>Hora inicio:</label>
+                <input type="time" class="form-control" [(ngModel)]="reserva.hora_inicio" name="hora_inicio" required>
+              </div>
+              <div class="mb-2">
+                <label>Hora fin:</label>
+                <input type="time" class="form-control" [(ngModel)]="reserva.hora_fin" name="hora_fin" required>
+              </div>
+              <button type="submit" class="btn btn-success">Confirmar reserva</button>
+              <button type="button" class="btn btn-link" (click)="cerrarReserva()">Cancelar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

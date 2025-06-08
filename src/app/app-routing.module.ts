@@ -7,6 +7,7 @@ import { RegisterComponent } from './layouts/components/register/register.compon
 import { AuthLayoutComponent } from './layouts/components/auth-layout/auth-layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { DashboardComponent } from './layouts/components/dashboard/dashboard.component';
+import { CanchasListComponent } from './layouts/components/canchas-list/canchas-list.component';
 const routes: Routes = [
   {
     path: 'auth',
@@ -46,6 +47,10 @@ const routes: Routes = [
     path: 'admin',
     component: DashboardComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'canchas',
+    component: CanchasListComponent
   }
 ];
 

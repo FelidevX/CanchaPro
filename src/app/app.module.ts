@@ -17,6 +17,7 @@ import { LoginComponent } from './layouts/components/login/login.component';
 import { RegisterComponent } from './layouts/components/register/register.component';
 import { AuthLayoutComponent } from './layouts/components/auth-layout/auth-layout.component';
 import { DashboardComponent } from './layouts/components/dashboard/dashboard.component';
+import { CanchasListComponent } from './layouts/components/canchas-list/canchas-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DashboardComponent } from './layouts/components/dashboard/dashboard.com
     LoginComponent,
     RegisterComponent,
     AuthLayoutComponent,
-    DashboardComponent
+    DashboardComponent,
+    CanchasListComponent
   ],
   imports: [
     BrowserModule,
