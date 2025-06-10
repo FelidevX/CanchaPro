@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CanchaService } from '../../../core/services/cancha.service';
 import { Reserva } from '../../../core/models/reserva.model';
 import { ReservaService } from '../../../core/services/reserva.service';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-canchas-list',
@@ -9,6 +10,7 @@ import { ReservaService } from '../../../core/services/reserva.service';
   styleUrl: './canchas-list.component.css'
 })
 export class CanchasListComponent implements OnInit{
+  @ViewChild(AlertsComponent) alerta!: AlertsComponent;
   canchas: any[] = [];
   canchaSeleccionada: any = null;
   reserva: Reserva = {
@@ -25,7 +27,7 @@ export class CanchasListComponent implements OnInit{
 
   abrirReserva(cancha: any): void {
     if(!this.usuarioLogueado) {
-      alert('Debes iniciar sesión para reservar una cancha.');
+      this.alerta.showAlert('Debes iniciar sesión para reservar una cancha.', 'error');
       return;
     }
     this.canchaSeleccionada = cancha;
@@ -45,20 +47,20 @@ export class CanchasListComponent implements OnInit{
 
   reservar() {
     if (!this.usuarioLogueado) {
-      alert('Debes iniciar sesión para realizar una reserva.');
+      this.alerta.showAlert('Debes iniciar sesión para realizar una reserva.', 'danger');
       return;
     }
 
     if (!this.reserva.fecha) {
-      alert('Debes seleccionar una fecha.');
+      this.alerta.showAlert('Debes seleccionar una fecha.', 'warning');
       return;
     }
     if (!this.reserva.hora_inicio) {
-      alert('Debes seleccionar una hora de inicio.');
+      this.alerta.showAlert('Debes seleccionar una hora de inicio.', 'warning');
       return;
     }
     if (!this.reserva.hora_fin) {
-      alert('Debes seleccionar una hora de fin.');
+      this.alerta.showAlert('Debes seleccionar una hora de fin.', 'warning');
       return;
     }
 
@@ -69,12 +71,12 @@ export class CanchasListComponent implements OnInit{
     const fechaHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
 
     if (isNaN(fechaSeleccionada.getTime())) {
-      alert('La fecha seleccionada no es válida.');
+      this.alerta.showAlert('La fecha seleccionada no es válida.', 'danger');
       return;
     }
 
     if (fechaSeleccionada < fechaHoy) {
-      alert('No puedes reservar en días anteriores a hoy.');
+      this.alerta.showAlert('No puedes reservar en días anteriores a hoy.', 'danger');
       return;
     }
 
@@ -85,33 +87,33 @@ export class CanchasListComponent implements OnInit{
       reservaDate.setHours(Number(h), Number(m), 0, 0);
 
       if (reservaDate < hoy) {
-        alert('No puedes reservar en una hora anterior a la actual.');
+        this.alerta.showAlert('No puedes reservar en una hora anterior a la actual.', 'danger');
         return;
       }
     }
 
     if (this.reserva.hora_inicio >= this.reserva.hora_fin) {
-      alert('La hora de inicio debe ser anterior a la hora de fin.');
+      this.alerta.showAlert('La hora de inicio debe ser anterior a la hora de fin.', 'danger');
       return;
     }
     const diff =
       (+this.reserva.hora_fin.split(':')[0] - +this.reserva.hora_inicio.split(':')[0]) +
       (+this.reserva.hora_fin.split(':')[1] - +this.reserva.hora_inicio.split(':')[1]) / 60;
     if (diff < 1) {
-      alert('La reserva debe ser de al menos una hora');
+      this.alerta.showAlert('La reserva debe ser de al menos una hora', 'warning');
       return;
     }
 
     this.reservaService.crearReserva(this.reserva).subscribe({
       next: () => {
-        alert('Reserva creada exitosamente');
+        this.alerta.showAlert('Reserva creada exitosamente');
         this.cerrarReserva();
       },
       error: (err) => {
         if (err.status === 400) {
-          alert('La cancha ya está reservada en ese horario.');
+          this.alerta.showAlert('La cancha ya está reservada en ese horario.', 'danger');
         } else {
-          alert('Error al crear la reserva, intenta nuevamente');
+          this.alerta.showAlert('Error al crear la reserva, intenta nuevamente', 'danger');
         }
       }
     });
