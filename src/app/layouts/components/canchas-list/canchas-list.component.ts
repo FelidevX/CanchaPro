@@ -27,7 +27,7 @@ export class CanchasListComponent implements OnInit{
 
   abrirReserva(cancha: any): void {
     if(!this.usuarioLogueado) {
-      this.alerta.showAlert('Debes iniciar sesión para reservar una cancha.', 'error');
+      this.alerta.showAlert('Debes iniciar sesión para reservar una cancha.', 'danger');
       return;
     }
     this.canchaSeleccionada = cancha;
