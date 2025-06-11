@@ -1,0 +1,67 @@
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h3 class="card-title mb-4"><i class="bi bi-calendar-check me-2"></i>Mis reservas</h3>
+    <form class="row g-3 mb-3">
+      <div class="col-md-5">
+        <label for="canchaFiltro" class="form-label">Filtrar por cancha</label>
+        <select id="canchaFiltro" class="form-select" [(ngModel)]="canchaSeleccionada" name="canchaFiltro">
+          <option value="">Todas</option>
+          <option *ngFor="let cancha of canchas" [value]="cancha.id">{{cancha.nombre}}</option>
+        </select>
+      </div>
+      <div class="col-md-5">
+        <label for="fechaFiltro" class="form-label">Filtrar por fecha</label>
+        <input type="date" id="fechaFiltro" class="form-control" [(ngModel)]="fechaSeleccionada" name="fechaFiltro">
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="button" class="btn btn-outline-secondary w-100" (click)="limpiarFiltros()">
+          Limpiar filtros
+        </button>
+      </div>
+    </form>
+
+    <div *ngIf="reservasFiltradas.length === 0" class="alert alert-info mt-3">
+      No hay reservas para mostrar.
+    </div>
+
+    <div *ngIf="reservasFiltradas.length > 0" class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Cancha</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reserva of reservasFiltradas">
+            <td>{{ reserva.nombre_cancha }}</td>
+            <td>{{ reserva.fecha | date:'dd/MM/yyyy' }}</td>
+            <td>{{ reserva.hora_inicio }} - {{ reserva.hora_fin }}</td>
+            <td>{{ reserva.nombre_cliente }}</td>
+            <td>
+              <span [ngClass]="{
+                'badge text-bg-success': reserva.estado === 'Confirmada',
+                'badge text-bg-warning': reserva.estado === 'Pendiente',
+                'badge text-bg-danger': reserva.estado === 'Cancelada'
+              }">
+                {{ reserva.estado }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm me-2" (click)="verDetalle(reserva)">
+                <i class="bi bi-eye"></i>
+              </button>
+              <button *ngIf="reserva.estado !== 'Cancelada'" class="btn btn-outline-danger btn-sm" (click)="cancelarReserva(reserva)">
+                <i class="bi bi-x-circle"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
