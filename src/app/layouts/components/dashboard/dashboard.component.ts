@@ -25,7 +25,6 @@ export class DashboardComponent {
    constructor(private canchaService: CanchaService) {}
 
   mostrarFormularioCrear = true;
-  mostrarAdministracion = false;
   mostrarCanchas = false;
   mostrarFormularioEditar = false;
   mostrarReservasE = false;
@@ -103,7 +102,6 @@ export class DashboardComponent {
 
   mostrarCrearCancha() {
     this.mostrarFormularioCrear = true;
-    this.mostrarAdministracion = false;
     this.mostrarCanchas = false;
     this.mostrarFormularioEditar = false;
     this.mostrarReservasE = false;
@@ -111,7 +109,6 @@ export class DashboardComponent {
 
   mostrarVerCanchas() {
     this.mostrarFormularioCrear = false;
-    this.mostrarAdministracion = false;
     this.mostrarFormularioEditar = false;
     this.mostrarReservasE = false;
     this.mostrarCanchas = true;

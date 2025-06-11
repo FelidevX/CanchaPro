@@ -18,6 +18,8 @@ import { RegisterComponent } from './layouts/components/register/register.compon
 import { AuthLayoutComponent } from './layouts/components/auth-layout/auth-layout.component';
 import { DashboardComponent } from './layouts/components/dashboard/dashboard.component';
 import { ReservasListComponent } from './layouts/components/reservas-list/reservas-list.component';
+import { CanchasListComponent } from './layouts/components/canchas-list/canchas-list.component';
+import { AlertsComponent } from './layouts/components/alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ReservasListComponent } from './layouts/components/reservas-list/reserv
     AuthLayoutComponent,
     DashboardComponent,
     ReservasListComponent
+    CanchasListComponent,
+    AlertsComponent
   ],
   imports: [
     BrowserModule,
