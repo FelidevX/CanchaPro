@@ -43,11 +43,7 @@
             <td>{{ reserva.hora_inicio }} - {{ reserva.hora_fin }}</td>
             <td>{{ reserva.nombre_cliente }}</td>
             <td>
-              <span [ngClass]="{
-                'badge text-bg-success': reserva.estado === 'Confirmada',
-                'badge text-bg-warning': reserva.estado === 'Pendiente',
-                'badge text-bg-danger': reserva.estado === 'Cancelada'
-              }">
+              <span [class]="getBadgeClass(reserva.estado)">
                 {{ reserva.estado }}
               </span>
             </td>

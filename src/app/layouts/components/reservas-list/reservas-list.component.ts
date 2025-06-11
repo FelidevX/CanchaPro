@@ -49,4 +49,17 @@ export class ReservasListComponent implements OnInit {
   cancelarReserva(reserva: any) {
     reserva.estado = 'Cancelada';
   }
+
+  getBadgeClass(estado: string): string {
+  switch (estado) {
+    case 'Confirmada':
+      return 'badge bg-success';
+    case 'Pendiente':
+      return 'badge bg-warning';
+    case 'Cancelada':
+      return 'badge bg-danger';
+    default:
+      return 'badge bg-secondary';
+  }
+}
 }
