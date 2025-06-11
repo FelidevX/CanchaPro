@@ -34,7 +34,7 @@ import { AlertsComponent } from './layouts/components/alerts/alerts.component';
     RegisterComponent,
     AuthLayoutComponent,
     DashboardComponent,
-    ReservasListComponent
+    ReservasListComponent,
     CanchasListComponent,
     AlertsComponent
   ],

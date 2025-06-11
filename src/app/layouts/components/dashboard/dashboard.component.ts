@@ -118,16 +118,8 @@ export class DashboardComponent {
     })
   }
 
-  mostrarAdministrar() {
-    this.mostrarFormularioCrear = false;
-    this.mostrarAdministracion = true;
-    this.mostrarCanchas = false;
-    this.mostrarReservasE = false;
-  }
-
   mostrarReservas() {
     this.mostrarFormularioCrear = false;
-    this.mostrarAdministracion = false;
     this.mostrarCanchas = false;
     this.mostrarFormularioEditar = false;
     this.mostrarReservasE = true;

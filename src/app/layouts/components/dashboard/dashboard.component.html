@@ -20,12 +20,6 @@
           <i class="bi bi-pencil-square me-2"></i> Mis reservas
         </button>
       </li>
-      <li class="nav-item mb-2">
-        <button class="btn btn-link text-white text-start w-100"
-                (click)="mostrarAdministrar()">
-          <i class="bi bi-gear me-2"></i> Administrar
-        </button>
-      </li>
     </ul>
   </div>
 
@@ -98,11 +92,6 @@
 
     <ng-container *ngIf="mostrarReservasE">
       <app-reservas-list [canchas]="canchasUsuario" [idDueno]="usuarioId.toString()"></app-reservas-list>
-    </ng-container>
-
-    <ng-container *ngIf="mostrarAdministracion">
-      <h3>Panel de administración</h3>
-      <p>Desde aquí podrás editar o eliminar canchas existentes.</p>
     </ng-container>
   </div>
 </div>
