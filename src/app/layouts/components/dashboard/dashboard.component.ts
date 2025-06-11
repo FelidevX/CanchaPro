@@ -27,6 +27,7 @@ export class DashboardComponent {
   mostrarFormularioCrear = true;
   mostrarCanchas = false;
   mostrarFormularioEditar = false;
+  mostrarReservasE = false;
   
   guardarCancha() {
   
@@ -53,16 +54,16 @@ export class DashboardComponent {
   }
 
   editarCancha(cancha: any) {
-  this.canchaEditando = { ...cancha }; // Copia para editar
+  this.canchaEditando = { ...cancha };
   this.mostrarFormularioEditar = true;
   this.mostrarFormularioCrear = false;
   this.mostrarCanchas = false;
+  this.mostrarReservasE = false;
   }
 
   guardarEdicionCancha() {
     this.canchaService.actualizarCancha(this.canchaEditando).subscribe({
     next: () => {
-      // Actualiza la lista de canchas
       this.mostrarVerCanchas();
       this.mostrarFormularioEditar = false;
       this.canchaEditando = null;
@@ -75,6 +76,7 @@ export class DashboardComponent {
     this.mostrarFormularioEditar = false;
     this.canchaEditando = null;
     this.mostrarCanchas = true;
+    this.mostrarReservasE = false;
   }
 
   abrirModalEliminar(cancha: any) {
@@ -102,11 +104,13 @@ export class DashboardComponent {
     this.mostrarFormularioCrear = true;
     this.mostrarCanchas = false;
     this.mostrarFormularioEditar = false;
+    this.mostrarReservasE = false;
   }
 
   mostrarVerCanchas() {
     this.mostrarFormularioCrear = false;
     this.mostrarFormularioEditar = false;
+    this.mostrarReservasE = false;
     this.mostrarCanchas = true;
     this.canchaService.obtenerCanchasPorDueno(this.usuarioId).subscribe({
       next: (data) => this.canchasUsuario = data,
@@ -114,4 +118,18 @@ export class DashboardComponent {
     })
   }
 
+  mostrarAdministrar() {
+    this.mostrarFormularioCrear = false;
+    this.mostrarAdministracion = true;
+    this.mostrarCanchas = false;
+    this.mostrarReservasE = false;
+  }
+
+  mostrarReservas() {
+    this.mostrarFormularioCrear = false;
+    this.mostrarAdministracion = false;
+    this.mostrarCanchas = false;
+    this.mostrarFormularioEditar = false;
+    this.mostrarReservasE = true;
+  }
 }
