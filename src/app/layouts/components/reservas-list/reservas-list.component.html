@@ -61,3 +61,37 @@
     </div>
   </div>
 </div>
+
+<!-- Modal de detalle de reserva -->
+<div class="modal fade show" tabindex="-1" [ngStyle]="{'display': mostrarModalDetalle ? 'block' : 'none', 'background': 'rgba(0,0,0,0.5)'}" *ngIf="mostrarModalDetalle">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-info-circle me-2"></i>Detalle de Reserva</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModalDetalle()"></button>
+      </div>
+      <div class="modal-body" *ngIf="detalleReserva">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Cancha:</strong> {{ detalleReserva.nombre_cancha }}</li>
+          <li class="list-group-item"><strong>Fecha:</strong> {{ detalleReserva.fecha | date:'dd/MM/yyyy' }}</li>
+          <li class="list-group-item"><strong>Hora:</strong> {{ detalleReserva.hora_inicio }} - {{ detalleReserva.hora_fin }}</li>
+          <li class="list-group-item"><strong>Cliente:</strong> {{ detalleReserva.nombre_cliente }}</li>
+          <li class="list-group-item"><strong>Estado:</strong> 
+            <span [class]="getBadgeClass(detalleReserva.estado)">
+              {{ detalleReserva.estado }}
+            </span>
+          </li>
+          <li class="list-group-item" *ngIf="detalleReserva.telefono_cliente"><strong>Teléfono:</strong> {{ detalleReserva.telefono_cliente }}</li>
+          <li class="list-group-item" *ngIf="detalleReserva.observaciones"><strong>Observaciones:</strong> {{ detalleReserva.observaciones }}</li>
+          <li class="list-group-item" *ngIf="detalleReserva.valor_reserva !== undefined">
+            <strong>Precio total:</strong>
+            {{ detalleReserva.valor_reserva | currency:'CLP':'symbol':'1.0-0' }}
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModalDetalle()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

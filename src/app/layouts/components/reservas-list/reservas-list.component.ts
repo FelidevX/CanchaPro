@@ -14,6 +14,9 @@ export class ReservasListComponent implements OnInit {
   canchaSeleccionada: string = '';
   fechaSeleccionada: string = '';
 
+  detalleReserva: any = null;
+  mostrarModalDetalle: boolean = false;
+
   constructor(private reservasService: ReservasService) {}
 
   ngOnInit() {
@@ -32,7 +35,7 @@ export class ReservasListComponent implements OnInit {
 
   get reservasFiltradas() {
     return this.reservas.filter(r =>
-      (!this.canchaSeleccionada || r.id_cancha == this.canchaSeleccionada) &&
+      (!this.canchaSeleccionada || r.id_cancha == +this.canchaSeleccionada) &&
       (!this.fechaSeleccionada || (new Date(r.fecha).toISOString().slice(0,10) === this.fechaSeleccionada))
     );
   }
@@ -43,7 +46,13 @@ export class ReservasListComponent implements OnInit {
   }
 
   verDetalle(reserva: any) {
-    alert('Detalle de reserva:\n' + JSON.stringify(reserva, null, 2));
+    this.detalleReserva = reserva;
+    this.mostrarModalDetalle = true;
+  }
+
+  cerrarModalDetalle() {
+    this.mostrarModalDetalle = false;
+    this.detalleReserva = null;
   }
 
   cancelarReserva(reserva: any) {
@@ -51,15 +60,15 @@ export class ReservasListComponent implements OnInit {
   }
 
   getBadgeClass(estado: string): string {
-  switch (estado) {
-    case 'Confirmada':
-      return 'badge bg-success';
-    case 'Pendiente':
-      return 'badge bg-warning';
-    case 'Cancelada':
-      return 'badge bg-danger';
-    default:
-      return 'badge bg-secondary';
+    switch (estado) {
+      case 'Confirmada':
+        return 'badge bg-success';
+      case 'Pendiente':
+        return 'badge bg-warning';
+      case 'Cancelada':
+        return 'badge bg-danger';
+      default:
+        return 'badge bg-secondary';
+    }
   }
-}
 }
