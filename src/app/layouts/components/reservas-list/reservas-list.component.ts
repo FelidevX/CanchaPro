@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ReservasService } from '../../../core/services/reservas.service';
+import { ReservaService } from '../../../core/services/reserva.service';
 
 @Component({
   selector: 'app-reservas-list',
@@ -17,17 +17,16 @@ export class ReservasListComponent implements OnInit {
   detalleReserva: any = null;
   mostrarModalDetalle: boolean = false;
 
-  constructor(private reservasService: ReservasService) {}
+  constructor(private reservaService: ReservaService) {}
 
   ngOnInit() {
-      console.log('ID dueño:', this.idDueno);
     if (this.idDueno) {
       this.cargarReservasPorDueno(this.idDueno);
     }
   }
 
   cargarReservasPorDueno(idDueno: string) {
-    this.reservasService.obtenerReservasPorDueno(idDueno).subscribe({
+    this.reservaService.obtenerReservasPorDueno(idDueno).subscribe({
       next: (data) => this.reservas = data,
       error: () => this.reservas = []
     });
@@ -56,7 +55,15 @@ export class ReservasListComponent implements OnInit {
   }
 
   cancelarReserva(reserva: any) {
-    reserva.estado = 'Cancelada';
+    const reservaActualizada = { ...reserva, estado: 'Cancelada' };
+    this.reservaService.actualizarReserva(reservaActualizada).subscribe({
+      next: () => {
+        reserva.estado = 'Cancelada';
+      },
+      error: () => {
+        alert('No se pudo cancelar la reserva. Intenta de nuevo.');
+      }
+    });
   }
 
   getBadgeClass(estado: string): string {

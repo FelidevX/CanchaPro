@@ -14,4 +14,12 @@ export class ReservaService {
   crearReserva(reserva: Reserva): Observable<Reserva> {
     return this.http.post<Reserva>(this.apiUrl, reserva);
   }
+
+  obtenerReservasPorDueno(idDueno: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${idDueno}`);
+  }
+
+  actualizarReserva(reserva: any) {
+    return this.http.put<any>(`${this.apiUrl}/${reserva.id}`, reserva);
+  }
 }

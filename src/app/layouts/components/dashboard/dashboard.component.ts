@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CanchaService } from '../../../core/services/cancha.service';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +8,7 @@ import { CanchaService } from '../../../core/services/cancha.service';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  @ViewChild(AlertsComponent) alerta!: AlertsComponent;
 
   cancha = {
     nombre: '',
@@ -32,11 +34,10 @@ export class DashboardComponent {
   guardarCancha() {
   
     this.cancha.id_dueno = Number(localStorage.getItem('user_id'));
-    console.log('Objeto enviado:', this.cancha);
 
     this.canchaService.crearCancha(this.cancha).subscribe({
       next: (response) => {
-        alert('Cancha creada exitosamente');
+        this.alerta.showAlert('Cancha creada exitosamente', 'success');
         this.cancha = {
           nombre: '',
           direccion: '',
@@ -47,7 +48,7 @@ export class DashboardComponent {
         }
       },
       error: (err) => {
-        alert('Error al guardar la cancha');
+        this.alerta.showAlert('Error al guardar la cancha', 'danger');
         console.error('Error backend:', err);
       }
     })
@@ -80,7 +81,6 @@ export class DashboardComponent {
   }
 
   abrirModalEliminar(cancha: any) {
-    console.log('Abriendo modal para:', cancha);
     this.canchaAEliminar = cancha;
     const modal = new (window as any).bootstrap.Modal(document.getElementById('modalEliminarCancha'));
     modal.show();
@@ -94,7 +94,7 @@ export class DashboardComponent {
         this.mostrarVerCanchas();
       },
       error: (err) => {
-        alert('Error al eliminar la cancha');
+        this.alerta.showAlert('Error al eliminar la cancha');
         console.error(err);
       }
     });
