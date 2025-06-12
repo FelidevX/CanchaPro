@@ -19,7 +19,7 @@ export class CanchasListComponent implements OnInit{
     hora_fin: '',
     id_usuario: Number(localStorage.getItem('user_id')),
     id_cancha: 0,
-    estado: 'ocupado'
+    estado: 'Confirmada'
   }
   usuarioLogueado: boolean = false;
 
@@ -37,7 +37,7 @@ export class CanchasListComponent implements OnInit{
       hora_fin: '',
       id_usuario: Number(localStorage.getItem('user_id')),
       id_cancha: cancha.id,
-      estado: 'ocupado'
+      estado: 'Confirmada'
     }
   }
 
