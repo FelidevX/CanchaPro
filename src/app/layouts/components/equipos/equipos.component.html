@@ -1,0 +1,102 @@
+<div class="container my-5">
+
+  <!-- Encabezado -->
+  <div class="text-center mb-4">
+    <h1 class="fw-bold">Equipos de Fútbol</h1>
+    <p class="text-muted">Únete a un equipo existente o crea el tuyo propio. Encuentra compañeros de juego y comienza a disfrutar.</p>
+    
+    <div class="d-flex justify-content-center gap-2 mt-3">
+      <button class="btn btn-dark" (click)="abrirModalCrear()">
+        <i class="bi bi-plus-lg"></i> Crear Equipo
+      </button>
+      <button class="btn btn-outline-dark">
+        <i class="bi bi-people-fill"></i> Mi equipo
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtros y búsqueda -->
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <div class="input-group w-auto">
+      <input type="text" class="form-control" placeholder="Buscar equipos...">
+      <button class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-light">Todos</button>
+      <button class="btn btn-light">Reclutando</button>
+      <button class="btn btn-outline-secondary"><i class="bi bi-filter"></i> Filtros</button>
+      <select class="form-select w-auto">
+        <option>Nombre</option>
+        <option>Miembros</option>
+        <option>Ubicación</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Lista de equipos -->
+  <div class="row g-4">
+    <div class="col-md-4" *ngFor="let equipo of equipos">
+      <div class="card shadow-sm">
+        <div class="card-img-top bg-light d-flex justify-content-center align-items-center" style="height: 180px;">
+        <!--  <span class="text-muted"><i class="bi bi-image" style="font-size: 2rem;"></i></span> -->
+          <img src="assets/equipo.png" style="width: 100%; height: 100%; object-fit: cover;" alt="Imagen del equipo">
+          <span class="badge bg-success position-absolute top-0 end-0 m-2">Reclutando</span>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ equipo.nombre }}</h5>
+          <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> {{equipo.ubicacion}} </p>
+          <p class="card-text"> {{equipo.descripcion}} </p>
+
+          <ul class="list-unstyled small mb-2">
+            <li><i class="bi bi-people-fill"></i> 6 miembros</li>
+            <li><i class="bi bi-person-fill"></i> {{equipo.nombre_dueno || 'Dueño no disponible'}} </li>
+          </ul>
+
+          <div class="mb-2">
+            <span class="badge bg-secondary me-1">Futbol 6</span>
+            <span class="badge bg-light border text-dark"> {{equipo.nivel | titlecase}} </span>
+          </div>
+         
+
+          <!--
+          <div class="mb-3">
+            <strong>Buscan:</strong>
+            <span *ngFor="let pos of equipo.buscan" class="badge bg-dark me-1">{{ pos }}</span>
+          </div>
+          -->
+          <button class="btn btn-dark w-100">Solicitar Unirse</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="modalCrearEquipo" tabindex="-1" aria-labelledby="modalCrearEquipoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCrearEquipoLabel">Confirmar equipo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" placeholder="Nombre del equipo" [(ngModel)]="equipo.nombre">
+        <input type="text" class="form-control mt-2" placeholder="Descripción del equipo" [(ngModel)]="equipo.descripcion">
+        <input type="text" class="form-control mt-2" placeholder="Ubicación del equipo" [(ngModel)]="equipo.ubicacion">
+        <select class="form-select mt-2" [(ngModel)]="equipo.nivel">
+          <option value="principiante">Principiante</option>
+          <option value="intermedio">Intermedio</option>
+          <option value="avanzado">Avanzado</option>
+          <option value="profesional">Profesional</option>
+        </select>
+        <br>
+        ¿Estás seguro que deseas crear este equipo?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="canchaCrearConfirmada()">Crear Equipo</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,15 +18,29 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Jugadores</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/equipos']">Equipos</a>
+          </li>
           <li *ngIf="usuarioRol === 'dueno'" class="nav-item">
             <a class="nav-link" [routerLink]="['/admin']">Administrar</a>
           </li>
-          <li class="nav-item ms-2">
-            <button *ngIf="!isAuthenticated" class="btn btn-primary" (click)="onLogin()">
+
+          <li *ngIf="isAuthenticated" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
+            <i class="bi bi-person-circle" style="font-size: 1.25rem;"></i>
+            <span class="d-none d-lg-inline">Perfil</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" [routerLink]="['/perfil']">Mi Cuenta</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item text-danger" (click)="onLogout()">Cerrar Sesión</button></li>
+            </ul>
+          </li>
+
+          <li class="nav-item ms-2" *ngIf="!isAuthenticated">
+            <button class="btn btn-primary" (click)="onLogin()">
               Iniciar Sesión
-            </button>
-            <button *ngIf="isAuthenticated" class="btn btn-outline-danger" (click)="onLogout()">
-              Cerrar Sesión
             </button>
           </li>
         </ul>

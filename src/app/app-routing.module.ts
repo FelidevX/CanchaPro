@@ -8,6 +8,9 @@ import { AuthLayoutComponent } from './layouts/components/auth-layout/auth-layou
 import { AuthGuard } from './core/guards/auth.guard';
 import { DashboardComponent } from './layouts/components/dashboard/dashboard.component';
 import { CanchasListComponent } from './layouts/components/canchas-list/canchas-list.component';
+import { EquiposComponent } from './layouts/components/equipos/equipos.component';
+import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.component';
+
 const routes: Routes = [
   {
     path: 'auth',
@@ -51,6 +54,14 @@ const routes: Routes = [
   {
     path: 'canchas',
     component: CanchasListComponent
+  },
+  {
+    path: 'equipos',
+    component: EquiposComponent
+  },
+  {
+    path: 'perfil',
+    component: MiCuentaComponent
   }
 ];
 
