@@ -6,10 +6,10 @@
     <p class="text-muted">Únete a un equipo existente o crea el tuyo propio. Encuentra compañeros de juego y comienza a disfrutar.</p>
     
     <div class="d-flex justify-content-center gap-2 mt-3">
-      <button class="btn btn-dark" (click)="abrirModalCrear()">
+      <button class="btn btn-dark" (click)="abrirModalCrear()" [disabled]="yaTieneEquipo">
         <i class="bi bi-plus-lg"></i> Crear Equipo
       </button>
-      <button class="btn btn-outline-dark">
+      <button class="btn btn-outline-dark" [routerLink]="['/miequipo']" [disabled]="!yaTieneEquipo">
         <i class="bi bi-people-fill"></i> Mi equipo
       </button>
     </div>
@@ -57,15 +57,7 @@
             <span class="badge bg-secondary me-1">Futbol 6</span>
             <span class="badge bg-light border text-dark"> {{equipo.nivel | titlecase}} </span>
           </div>
-         
-
-          <!--
-          <div class="mb-3">
-            <strong>Buscan:</strong>
-            <span *ngFor="let pos of equipo.buscan" class="badge bg-dark me-1">{{ pos }}</span>
-          </div>
-          -->
-          <button class="btn btn-dark w-100">Solicitar Unirse</button>
+          <button class="btn btn-dark w-100" (click)="solicitarUnirseEquipo(equipo.id!)" [disabled]="equiposConUsuario.includes(equipo.id || 0)">Solicitar Unirse</button>
         </div>
       </div>
     </div>

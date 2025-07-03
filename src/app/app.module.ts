@@ -22,6 +22,7 @@ import { CanchasListComponent } from './layouts/components/canchas-list/canchas-
 import { AlertsComponent } from './layouts/components/alerts/alerts.component';
 import { EquiposComponent } from './layouts/components/equipos/equipos.component';
 import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.component';
+import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.comp
     CanchasListComponent,
     AlertsComponent,
     EquiposComponent,
-    MiCuentaComponent
+    MiCuentaComponent,
+    MiEquipoComponent
   ],
   imports: [
     BrowserModule,

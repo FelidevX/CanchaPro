@@ -10,6 +10,7 @@ import { DashboardComponent } from './layouts/components/dashboard/dashboard.com
 import { CanchasListComponent } from './layouts/components/canchas-list/canchas-list.component';
 import { EquiposComponent } from './layouts/components/equipos/equipos.component';
 import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.component';
+import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.component';
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
   {
     path: 'perfil',
     component: MiCuentaComponent
+  },
+  {
+    path: 'miequipo',
+    component: MiEquipoComponent
   }
 ];
 
