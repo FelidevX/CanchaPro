@@ -58,6 +58,7 @@
             <span class="badge bg-light border text-dark"> {{equipo.nivel | titlecase}} </span>
           </div>
           <button class="btn btn-dark w-100" (click)="solicitarUnirseEquipo(equipo.id!)" [disabled]="equiposConUsuario.includes(equipo.id || 0)">Solicitar Unirse</button>
+          <button class="btn btn-primary w-100 mt-2" (click)="retarPartido(equipo.id!)">Retar a un partido</button>
         </div>
       </div>
     </div>
@@ -92,3 +93,5 @@
     </div>
   </div>
 </div>
+
+<app-alerts></app-alerts>

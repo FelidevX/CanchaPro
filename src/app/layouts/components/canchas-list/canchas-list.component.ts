@@ -3,6 +3,7 @@ import { CanchaService } from '../../../core/services/cancha.service';
 import { Reserva } from '../../../core/models/reserva.model';
 import { ReservaService } from '../../../core/services/reserva.service';
 import { AlertsComponent } from '../alerts/alerts.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-canchas-list',
@@ -23,7 +24,7 @@ export class CanchasListComponent implements OnInit{
   }
   usuarioLogueado: boolean = false;
 
-  constructor(private canchaService: CanchaService, private reservaService: ReservaService){}
+  constructor(private canchaService: CanchaService, private reservaService: ReservaService, private http: HttpClient){}
 
   abrirReserva(cancha: any): void {
     if(!this.usuarioLogueado) {
@@ -104,19 +105,19 @@ export class CanchasListComponent implements OnInit{
       return;
     }
 
-    this.reservaService.crearReserva(this.reserva).subscribe({
-      next: () => {
-        this.alerta.showAlert('Reserva creada exitosamente');
-        this.cerrarReserva();
-      },
-      error: (err) => {
-        if (err.status === 400) {
-          this.alerta.showAlert('La cancha ya está reservada en ese horario.', 'danger');
-        } else {
-          this.alerta.showAlert('Error al crear la reserva, intenta nuevamente', 'danger');
+    console.log('precio:', this.canchaSeleccionada.precio);
+
+    // En vez de crear la reserva directamente, solicita la URL de pago
+    this.http.post<{ url: string }>('http://localhost:3000/reservas/pago', { precio: this.canchaSeleccionada.precio })
+      .subscribe({
+        next: (res) => {
+          window.location.href = res.url;
+        },
+        error: () => {
+          this.alerta.showAlert('Error al iniciar el pago', 'danger');
         }
-      }
-    });
+      });
+      localStorage.setItem('reservaPendiente', JSON.stringify(this.reserva));
   }
 
   ngOnInit(): void {

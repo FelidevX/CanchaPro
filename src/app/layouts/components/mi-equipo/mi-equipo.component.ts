@@ -26,6 +26,8 @@ export class MiEquipoComponent implements OnInit {
 
   solicitudes: Solicitud[] = [];
   jugadores: Jugador[] = [];
+  jugadorAEliminar: Jugador | null = null;
+  mostrarModalEliminar: boolean = false;
 
 
   constructor(private equipoService: EquipoService ) { }
@@ -141,6 +143,36 @@ export class MiEquipoComponent implements OnInit {
         console.error('Error al obtener los jugadores del equipo:', err);
       }
     });
+  }
+
+  eliminarJugador(jugador: Jugador) {
+    if (jugador.rol === 'capitan') {
+      this.alerta.showAlert('No puedes eliminar al capitán del equipo.', 'warning');
+      return;
+    }
+    this.jugadorAEliminar = jugador;
+    this.mostrarModalEliminar = true;
+  }
+
+  confirmarEliminarJugador() {
+    if (!this.jugadorAEliminar) return;
+    this.equipoService.eliminarJugadorEquipo(this.equipo.id!, this.jugadorAEliminar.id!).subscribe({
+      next: (response) => {
+        this.alerta.showAlert('Jugador eliminado del equipo exitosamente!', 'success');
+        this.obtenerJugadoresEquipo();
+        this.cerrarModalEliminar();
+      },
+      error: (err) => {
+        console.error('Error al eliminar el jugador del equipo:', err);
+        this.alerta.showAlert('No se pudo eliminar al jugador del equipo. Por favor, inténtalo de nuevo más tarde.', 'danger');
+        this.cerrarModalEliminar();
+      }
+    });
+  }
+
+  cerrarModalEliminar() {
+    this.mostrarModalEliminar = false;
+    this.jugadorAEliminar = null;
   }
 
   toggleMiEquipo() {

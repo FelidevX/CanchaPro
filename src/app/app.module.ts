@@ -23,6 +23,7 @@ import { AlertsComponent } from './layouts/components/alerts/alerts.component';
 import { EquiposComponent } from './layouts/components/equipos/equipos.component';
 import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.component';
 import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.component';
+import { PagoExitosoComponent } from './layouts/components/pago-exitoso/pago-exitoso.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.comp
     AlertsComponent,
     EquiposComponent,
     MiCuentaComponent,
-    MiEquipoComponent
+    MiEquipoComponent,
+    PagoExitosoComponent
   ],
   imports: [
     BrowserModule,

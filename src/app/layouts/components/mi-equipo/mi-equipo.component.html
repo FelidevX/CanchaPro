@@ -65,8 +65,32 @@
                 <strong>{{ jugador.nombre }}</strong> - {{ jugador.posicion | titlecase}}
                 <span *ngIf="jugador.rol === 'capitan'" class="badge bg-primary ms-2">Capitán</span>
               </div>
+              <div>
+                <button class="btn btn-danger btn-sm" (click)="eliminarJugador(jugador)">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </div>
             </li>
           </ul>
+        </div>
+
+        <!-- Modal de confirmación para eliminar jugador -->
+        <div class="modal fade show" tabindex="-1" [ngStyle]="{display: mostrarModalEliminar ? 'block' : 'none', background: 'rgba(0,0,0,0.5)'}" *ngIf="mostrarModalEliminar">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModalEliminar()"></button>
+              </div>
+              <div class="modal-body">
+                <p>¿Estás seguro que deseas eliminar a <strong>{{ jugadorAEliminar?.nombre }}</strong> del equipo?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModalEliminar()">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmarEliminarJugador()">Eliminar</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Lista de solicitudes -->

@@ -39,6 +39,12 @@ export class EquiposComponent {
   }
 
   abrirModalCrear() {
+
+    if (!this.usuarioLogueado) {
+      this.alerta.showAlert('Debes iniciar sesión para crear un equipo.', 'warning');
+      return;
+    }
+
     if (this.yaTieneEquipo) {
       this.alerta.showAlert('Ya tienes un equipo creado. No puedes crear más de uno.', 'danger');
       return;
@@ -48,10 +54,6 @@ export class EquiposComponent {
   }
 
   crearEquipo(equipo: any): void {
-    if (!this.usuarioLogueado) {
-      this.alerta.showAlert('Debes iniciar sesión para crear un equipo.', 'warning');
-      return;
-    }
 
     const idUsuario = Number(localStorage.getItem('user_id'));
     const yaTieneEquipo = this.equipos.some(e => e.id_dueno === idUsuario);
@@ -100,6 +102,12 @@ export class EquiposComponent {
   }
 
   solicitarUnirseEquipo(id_equipo: number) {
+
+    if (!this.usuarioLogueado) {
+      this.alerta.showAlert('Debes iniciar sesión para crear un equipo.', 'warning');
+      return;
+    }
+
     const idUsuario = Number(localStorage.getItem('user_id'));
     // Busca si ya existe una solicitud pendiente para este usuario y equipo
     this.equipoService.listarSolicitudes(id_equipo).subscribe({
@@ -141,6 +149,44 @@ export class EquiposComponent {
       error: (err) => {
         console.error('Error al verificar solicitudes:', err);
         this.alerta.showAlert('No se pudo verificar si ya tienes una solicitud pendiente. Intenta de nuevo.', 'danger');
+      }
+    });
+  }
+
+  retarPartido(idEquipoRetado: number) {
+    if (!this.usuarioLogueado) {
+      this.alerta.showAlert('Debes iniciar sesión para retar a un partido.', 'warning');
+      return;
+    }
+
+    if (this.equipos.length < 2) {
+      this.alerta.showAlert('No hay suficientes equipos para retar a un partido.', 'warning');
+      return;
+    }
+
+    const idUsuario = Number(localStorage.getItem('user_id'));
+    this.equipoService.obtenerEquipoCapitan(idUsuario).subscribe({
+      next: (equipoRetador) => {
+        if (!equipoRetador || !equipoRetador.id) {
+          this.alerta.showAlert('No eres capitán de ningún equipo.', 'warning');
+          return;
+        }
+        if (idEquipoRetado === equipoRetador.id) {
+          this.alerta.showAlert('No puedes retar a tu propio equipo.', 'warning');
+          return;
+        }
+        this.equipoService.retarEquipo(equipoRetador.id, idEquipoRetado).subscribe({
+          next: (response) => {
+            this.alerta.showAlert('Reto enviado exitosamente.', 'success');
+          },
+          error: (err) => {
+            console.error('Error al enviar el reto:', err);
+            this.alerta.showAlert('No se pudo enviar el reto. Por favor, inténtalo de nuevo más tarde.', 'danger');
+          }
+        });
+      },
+      error: (err) => {
+        this.alerta.showAlert('Error al verificar tu equipo.', 'danger');
       }
     });
   }

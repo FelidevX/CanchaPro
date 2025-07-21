@@ -11,6 +11,7 @@ import { CanchasListComponent } from './layouts/components/canchas-list/canchas-
 import { EquiposComponent } from './layouts/components/equipos/equipos.component';
 import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.component';
 import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.component';
+import { PagoExitosoComponent } from './layouts/components/pago-exitoso/pago-exitoso.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,10 @@ const routes: Routes = [
   {
     path: 'miequipo',
     component: MiEquipoComponent
+  },
+  {
+    path: 'pago-exitoso',
+    component: PagoExitosoComponent
   }
 ];
 

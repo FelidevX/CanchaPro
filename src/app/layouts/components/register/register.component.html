@@ -53,6 +53,22 @@
             </div>
 
             <div class="mb-3">
+              <label for="phone" class="form-label">Teléfono</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="phone" 
+                placeholder="952345678"
+                formControlName="phone"
+                [ngClass]="{'is-invalid': submitted && f['phone'].errors}">
+                <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+                  <div *ngIf="f['phone'].errors['required']">El teléfono es requerido</div>
+                  <div *ngIf="f['phone'].errors['pattern']">Formato de teléfono inválido</div>
+
+                </div>
+            </div>
+
+            <div class="mb-3">
               <label for="password" class="form-label">Contraseña</label>
               <input 
                 type="password" 
