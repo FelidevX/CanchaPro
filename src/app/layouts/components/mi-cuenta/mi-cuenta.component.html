@@ -1,0 +1,72 @@
+<div class="container py-5">
+
+  <h2 class="mb-4 fw-bold text-center">Mi Cuenta</h2>
+
+  <form class="mx-auto" style="max-width: 600px;" (ngSubmit)="actualizarDatos()" #cuentaForm="ngForm">
+    
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nombre"
+        name="nombre"
+        [(ngModel)]="usuario.name"
+        required
+      />
+    </div>
+
+    <!-- Apellido -->
+    <div class="mb-3">
+      <label for="apellido" class="form-label">Apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        id="apellido"
+        name="apellido"
+        [(ngModel)]="usuario.lastName"
+        required
+      />
+    </div>
+
+    <!-- Teléfono -->
+    <div class="mb-3">
+      <label for="telefono" class="form-label">Teléfono</label>
+      <input
+        type="tel"
+        class="form-control"
+        id="telefono"
+        name="telefono"
+        [(ngModel)]="usuario.telefono"
+        pattern="[0-9]{9}"
+        placeholder="Ej: 912345678"
+        required
+      />
+    </div>
+
+    <!-- Posición -->
+    <div class="mb-3">
+      <label for="posicion" class="form-label">Posición</label>
+      <select
+        class="form-select"
+        id="posicion"
+        name="posicion"
+        [(ngModel)]="usuario.position"
+        required
+      >
+        <option value="" disabled>Selecciona tu posición</option>
+        <option value="portero">Portero</option>
+        <option value="defensor">Defensor</option>
+        <option value="mediocampista">Mediocampista</option>
+        <option value="delantero">Delantero</option>
+      </select>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-center mt-4">
+      <button type="submit" class="btn btn-dark">Guardar Cambios</button>
+    </div>
+
+  </form>
+</div>

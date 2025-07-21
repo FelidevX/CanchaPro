@@ -1,0 +1,132 @@
+<div class="d-flex" style="min-height: 100vh;">
+  <!-- Sidebar -->
+  <div class="bg-dark text-white p-3" style="width: 250px;">
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="toggleMiEquipo()">
+          <i class="bi bi-plus-circle me-2"></i> Mi equipo
+        </button>
+      </li>
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="equipo.id !== undefined && toggleJugadores()">
+           <i class="bi bi-eye me-2"></i> Mis jugadores
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex-grow-1 p-4 bg-light">
+    <ng-container *ngIf="mostrarMiEquipo">
+      <!-- Formulario Mi Equipo -->
+      <h3>Tu equipo</h3>
+      <form (ngSubmit)="actualizarEquipo()" #equipoForm="ngForm">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre del equipo</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" placeholder="FC Barcelona..." [(ngModel)]="equipo.nombre" required>
+        </div>
+        <div class="mb-3">
+          <label for="ubicacion" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="descripcion" name="descripcion" [(ngModel)]="equipo.descripcion" required>
+        </div>
+        <div class="mb-3">
+          <label for="ubicacion" class="form-label">Ubicación</label>
+          <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ej: Chillán" [(ngModel)]="equipo.ubicacion" required>
+        </div>
+        <div class="mb-3">
+        <label for="descripcion" class="form-label">Nivel</label>
+          <select type="text" class="form-control" id="nivel" name="nivel" [(ngModel)]="equipo.nivel" required>
+            <option value="" disabled selected>Selecciona el nivel del equipo</option>
+            <option value="principiante">Principiante</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+            <option value="profesional">Profesional</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Guardar Cancha</button>
+      </form>
+    </ng-container>
+
+
+    <ng-container *ngIf="mostrarJugadores">
+      <div class="container mt-4">
+        <!-- Lista de jugadores -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h4 class="mb-0">Jugadores del equipo</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              *ngFor="let jugador of jugadores"
+            >
+              <div>
+                <strong>{{ jugador.nombre }}</strong> - {{ jugador.posicion | titlecase}}
+                <span *ngIf="jugador.rol === 'capitan'" class="badge bg-primary ms-2">Capitán</span>
+              </div>
+              <div>
+                <button class="btn btn-danger btn-sm" (click)="eliminarJugador(jugador)">
+                  <i class="bi bi-trash"></i> Eliminar
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Modal de confirmación para eliminar jugador -->
+        <div class="modal fade show" tabindex="-1" [ngStyle]="{display: mostrarModalEliminar ? 'block' : 'none', background: 'rgba(0,0,0,0.5)'}" *ngIf="mostrarModalEliminar">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModalEliminar()"></button>
+              </div>
+              <div class="modal-body">
+                <p>¿Estás seguro que deseas eliminar a <strong>{{ jugadorAEliminar?.nombre }}</strong> del equipo?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModalEliminar()">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmarEliminarJugador()">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de solicitudes -->
+        <div class="card">
+          <div class="card-header">
+            <h4 class="mb-0">Solicitudes pendientes</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <ng-container *ngFor="let solicitud of solicitudes">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-center"
+                *ngIf="solicitud.estado === 'pendiente'"
+              >
+                <div>
+                  <strong>{{ solicitud.nombre }}</strong> - {{ solicitud.posicion }}
+                  <br />
+                  <small class="text-muted">Solicitado el: {{ solicitud.fecha_solicitud | date:'mediumDate' }}</small>
+                </div>
+                <div>
+                  <button class="btn btn-success btn-sm me-2" (click)="aceptarSolicitud(solicitud)">
+                    Aceptar
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="rechazarSolicitud(solicitud)">
+                    Rechazar
+                  </button>
+                </div>
+              </li>
+            </ng-container>
+          </ul>
+          <div *ngIf="solicitudes.length === 0" class="p-3 text-center text-muted">
+            No hay solicitudes pendientes.
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</div>
+<app-alerts></app-alerts>
