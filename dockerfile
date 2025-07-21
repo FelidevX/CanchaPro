@@ -1,10 +1,9 @@
-# Etapa única: Servir build de Angular con NGINX
 FROM nginx:alpine
 
-# Copia tu build generado localmente
-COPY dist/canchapro /usr/share/nginx/html
+# Copia la build real
+COPY dist/canchapro/browser /usr/share/nginx/html
 
-# Configura rutas SPA (Angular)
+# Configura NGINX para rutas Angular
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
