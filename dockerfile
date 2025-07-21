@@ -1,9 +1,15 @@
+# Etapa 1: Build de Angular
+FROM node:18 AS build
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build --configuration production
+
+# Etapa 2: Servir app Angular con NGINX
 FROM nginx:alpine
-
-# Copia la build real
-COPY dist/canchapro/browser /usr/share/nginx/html
-
-# Configura NGINX para rutas Angular
+COPY --from=build /app/dist/canchapro/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80

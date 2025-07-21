@@ -1,9 +1,5 @@
 node_modules
-src
-*.ts
-*.md
-angular.json
-package*.json
-Dockerfile
-nginx.conf
-!dist/canchapro/browser/**
+.git
+.gitignore
+README.md
+*.log
