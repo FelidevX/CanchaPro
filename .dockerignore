@@ -1,0 +1,10 @@
+node_modules
+src
+*.ts
+*.json
+*.md
+angular.json
+package*.json
+Dockerfile
+nginx.conf
+!dist/canchapro/**
