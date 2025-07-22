@@ -4,6 +4,7 @@ import { Reserva } from '../../../core/models/reserva.model';
 import { ReservaService } from '../../../core/services/reserva.service';
 import { AlertsComponent } from '../alerts/alerts.component';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-canchas-list',
@@ -108,7 +109,7 @@ export class CanchasListComponent implements OnInit{
     console.log('precio:', this.canchaSeleccionada.precio);
 
     // En vez de crear la reserva directamente, solicita la URL de pago
-    this.http.post<{ url: string }>('https://backend-canchapro.onrender.com/reservas/pago', { precio: this.canchaSeleccionada.precio })
+    this.http.post<{ url: string }>(`${environment.apiUrl}/reservas/pago`, { precio: this.canchaSeleccionada.precio })
       .subscribe({
         next: (res) => {
           window.location.href = res.url;
