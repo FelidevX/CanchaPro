@@ -153,7 +153,7 @@ app.get('/auth/google/callback', async (req, res) => {
             userId = existingUser[0].id;
         }
 
-        res.redirect(`http://localhost:4200/callback?token=${tokens.access_token}&userId=${userId}`);
+        res.redirect(`https://backend-canchapro.onrender.com/callback?token=${tokens.access_token}&userId=${userId}`);
     } catch (error) {
         console.error('Error en autenticación:', error);
         res.status(500).send('Error en autenticación');
