@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class EquipoService {
 
-  private apiUrl = 'http://localhost:3000/equipos';
+  private apiUrl = 'https://backend-canchapro.onrender.com/equipos';
 
   constructor(private http: HttpClient) { }
 

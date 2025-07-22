@@ -7,7 +7,7 @@ import { Reserva } from '../models/reserva.model';
   providedIn: 'root'
 })
 export class ReservaService {
-  private apiUrl = 'http://localhost:3000/reservas';
+  private apiUrl = 'https://backend-canchapro.onrender.com/reservas';
 
   constructor(private http: HttpClient) { }
 

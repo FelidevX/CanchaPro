@@ -7,7 +7,7 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/user';
+  private apiUrl = 'https://backend-canchapro.onrender.com/user';
 
   constructor(private http: HttpClient) { }
 
