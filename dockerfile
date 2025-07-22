@@ -6,7 +6,6 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
-RUN grep -r "localhost:3000" ./dist/canchapro/browser || echo "No se encontró localhost:3000 en el build"
 
 # Etapa 2: Servir app Angular con NGINX
 FROM nginx:alpine
