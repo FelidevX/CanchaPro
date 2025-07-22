@@ -108,7 +108,7 @@ export class CanchasListComponent implements OnInit{
     console.log('precio:', this.canchaSeleccionada.precio);
 
     // En vez de crear la reserva directamente, solicita la URL de pago
-    this.http.post<{ url: string }>('http://localhost:3000/reservas/pago', { precio: this.canchaSeleccionada.precio })
+    this.http.post<{ url: string }>('https://backend-canchapro.onrender.com/reservas/pago', { precio: this.canchaSeleccionada.precio })
       .subscribe({
         next: (res) => {
           window.location.href = res.url;
