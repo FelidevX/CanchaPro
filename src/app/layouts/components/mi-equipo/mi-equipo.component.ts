@@ -94,6 +94,7 @@ export class MiEquipoComponent implements OnInit {
         this.alerta.showAlert('Solicitud aceptada exitosamente!', 'success');
         this.solicitudes[0].estado = 'aceptada';
         this.agregarJugadorEquipo(solicitud);
+        this.listarSolicitudes(this.equipo.id!);
       },
       error: (err) => {
         console.error('Error al aceptar la solicitud:', err);

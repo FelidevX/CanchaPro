@@ -101,24 +101,27 @@ export class CanchasListComponent implements OnInit{
     const diff =
       (+this.reserva.hora_fin.split(':')[0] - +this.reserva.hora_inicio.split(':')[0]) +
       (+this.reserva.hora_fin.split(':')[1] - +this.reserva.hora_inicio.split(':')[1]) / 60;
+
     if (diff < 1) {
-      this.alerta.showAlert('La reserva debe ser de al menos una hora', 'warning');
+      this.alerta.showAlert('La reserva debe ser de al menos 1 hora.', 'danger');
       return;
     }
 
-    console.log('precio:', this.canchaSeleccionada.precio);
+    const precioTotal = this.canchaSeleccionada.precio * diff;
 
-    // En vez de crear la reserva directamente, solicita la URL de pago
-    this.http.post<{ url: string }>(`${environment.apiUrl}/reservas/pago`, { precio: this.canchaSeleccionada.precio })
-      .subscribe({
-        next: (res) => {
-          window.location.href = res.url;
-        },
-        error: () => {
-          this.alerta.showAlert('Error al iniciar el pago', 'danger');
-        }
-      });
-      localStorage.setItem('reservaPendiente', JSON.stringify(this.reserva));
+    this.http.post<{ url: string }>(
+      `${environment.apiUrl}/reservas/pago`,
+      { precio: precioTotal }
+    )
+    .subscribe({
+      next: (res) => {
+        window.location.href = res.url;
+      },
+      error: () => {
+        this.alerta.showAlert('Error al iniciar el pago', 'danger');
+      }
+    });
+    localStorage.setItem('reservaPendiente', JSON.stringify(this.reserva));
   }
 
   ngOnInit(): void {
