@@ -14,7 +14,6 @@ export class AdminDashboardComponent implements OnInit {
   usuarioEditando: any = null;
   roles: string[] = ['jugador', 'dueno', 'admin'];
   mostrarGestionUsuario = true;
-  mostrarSolicitudes = false;
   partidosPendientes: any[] = [];
   
 
@@ -59,12 +58,6 @@ export class AdminDashboardComponent implements OnInit {
 
   mostrarGestionUsuarios() {
     this.mostrarGestionUsuario = true;
-    this.mostrarSolicitudes = false;
-  }
-
-  mostrarSolicitudDueno() {
-    this.mostrarGestionUsuario = false;
-    this.mostrarSolicitudes = true;
   }
 
   cargarPartidosPendientes() {
