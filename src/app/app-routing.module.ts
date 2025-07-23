@@ -6,12 +6,14 @@ import { LoginComponent } from './layouts/components/login/login.component';
 import { RegisterComponent } from './layouts/components/register/register.component';
 import { AuthLayoutComponent } from './layouts/components/auth-layout/auth-layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 import { DashboardComponent } from './layouts/components/dashboard/dashboard.component';
 import { CanchasListComponent } from './layouts/components/canchas-list/canchas-list.component';
 import { EquiposComponent } from './layouts/components/equipos/equipos.component';
 import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.component';
 import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.component';
 import { PagoExitosoComponent } from './layouts/components/pago-exitoso/pago-exitoso.component';
+import { AdminDashboardComponent } from './layouts/components/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   {
@@ -44,11 +46,6 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'manage',
-    component: AuthLayoutComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'admin',
     component: DashboardComponent,
     canActivate: [AuthGuard],
@@ -72,6 +69,11 @@ const routes: Routes = [
   {
     path: 'pago-exitoso',
     component: PagoExitosoComponent
+  },
+  {
+    path: 'manage',
+    component: AdminDashboardComponent,
+    canActivate: [AdminGuard]
   }
 ];
 

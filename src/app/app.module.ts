@@ -24,6 +24,7 @@ import { EquiposComponent } from './layouts/components/equipos/equipos.component
 import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.component';
 import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.component';
 import { PagoExitosoComponent } from './layouts/components/pago-exitoso/pago-exitoso.component';
+import { AdminDashboardComponent } from './layouts/components/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PagoExitosoComponent } from './layouts/components/pago-exitoso/pago-exi
     EquiposComponent,
     MiCuentaComponent,
     MiEquipoComponent,
-    PagoExitosoComponent
+    PagoExitosoComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
