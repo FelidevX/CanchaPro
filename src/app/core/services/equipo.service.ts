@@ -80,6 +80,6 @@ export class EquipoService {
   }
 
   rechazarResultado(id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${id}/rechazar`, {});
+    return this.http.post(`${this.apiUrl}/rechazar/${id}`, {});
 }
 }
