@@ -28,5 +28,21 @@ export class UserService {
     return this.http.put<User>(`${this.apiUrl}/${usuario.id}`, usuario, { headers });
   }
 
+  obtenerUsuarios(): Observable<User[]> {
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<User[]>(`${this.apiUrl}/all`, { headers });
+  }
+
+  actualizarRolUsuario(id: number, role: string): Observable<User> {
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.put<User>(`${this.apiUrl}/rol/${id}`, { role }, { headers });
+  }
+
   
 }

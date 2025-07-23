@@ -63,4 +63,23 @@ export class EquipoService {
     return this.http.delete<any>(`${this.apiUrl}/jugador/${idEquipo}/${idJugador}`);
   }
 
+  obtenerRankingEquipos(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/ranking`);
+  }
+
+  notificarResultado(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/notificar`, data);
+  }
+
+  obtenerPartidosPendientes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pendientes`);
+  }
+
+  aprobarResultado(id: number): Observable<any> {
+   return this.http.post(`${this.apiUrl}/resultado/aprobar/${id}`, {});
+  }
+
+  rechazarResultado(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${id}/rechazar`, {});
+}
 }

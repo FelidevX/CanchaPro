@@ -12,15 +12,15 @@ export class PagoExitosoComponent implements OnInit {
 
   ngOnInit() {
   const reserva = JSON.parse(localStorage.getItem('reservaPendiente') || '{}');
+  console.log('Reserva a guardar:', reserva); // <-- Agrega esto
   if (reserva && reserva.fecha) {
     this.reservaService.crearReserva(reserva).subscribe({
       next: () => {
-        // Muestra mensaje de éxito y limpia localStorage
         localStorage.removeItem('reservaPendiente');
         // ...mostrar alerta o redirigir...
       },
-      error: () => {
-        // ...mostrar error...
+      error: (err) => {
+        console.error('Error al guardar reserva:', err); // <-- Agrega esto
       }
     });
   }

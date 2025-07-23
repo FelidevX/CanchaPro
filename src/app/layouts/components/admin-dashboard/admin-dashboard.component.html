@@ -1,0 +1,85 @@
+<div class="d-flex" style="min-height: 100vh;">
+  <!-- Sidebar -->
+  <div class="bg-dark text-white p-3" style="width: 250px;">
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="mostrarGestionUsuarios()">
+          <i class="bi bi-people me-2"></i> Gestión de usuarios
+        </button>
+      </li>
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="mostrarSolicitudDueno()">
+          <i class="bi bi-people me-2"></i> Solicitudes de dueños
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="flex-grow-1 p-4 bg-light">
+    <ng-container *ngIf="mostrarGestionUsuarios">
+      <h2>Usuarios</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <td>{{ usuario.name }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.role }}</td>
+            <td>
+              <ng-container *ngIf="usuarioEditando?.id === usuario.id; else rolView">
+                <select [(ngModel)]="usuarioEditando.role" class="form-select form-select-sm">
+                  <option *ngFor="let rol of roles" [value]="rol">{{ rol }}</option>
+                </select>
+              </ng-container>
+              <ng-template #rolView>{{ usuario.rol }}</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="usuarioEditando?.id === usuario.id; else editBtn">
+                <button class="btn btn-success btn-sm me-1" (click)="guardarRol()">Guardar</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">Cancelar</button>
+              </ng-container>
+              <ng-template #editBtn>
+                <button class="btn btn-primary btn-sm" (click)="editarUsuario(usuario)">Editar Rol</button>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <h3>Resultados pendientes</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Equipo A</th>
+          <th>Equipo B</th>
+          <th>Goles A</th>
+          <th>Goles B</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let partido of partidosPendientes">
+          <td>{{ partido.equipo_a_nombre }}</td>
+          <td>{{ partido.equipo_b_nombre }}</td>
+          <td>{{ partido.goles_a }}</td>
+          <td>{{ partido.goles_b }}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="aprobarResultado(partido.id)">Aprobar</button>
+            <button class="btn btn-danger btn-sm" (click)="rechazarResultado(partido.id)">Rechazar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-alerts></app-alerts>
