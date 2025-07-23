@@ -8,6 +8,12 @@
           <i class="bi bi-people me-2"></i> Gestión de usuarios
         </button>
       </li>
+      <li class="nav-item mb-2">
+        <button class="btn btn-link text-white text-start w-100"
+                (click)="mostrarSolicitudDueno()">
+          <i class="bi bi-people me-2"></i> Solicitudes de dueños
+        </button>
+      </li>
     </ul>
   </div>
 
@@ -49,6 +55,31 @@
         </tbody>
       </table>
     </ng-container>
+
+    <h3>Resultados pendientes</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Equipo A</th>
+          <th>Equipo B</th>
+          <th>Goles A</th>
+          <th>Goles B</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let partido of partidosPendientes">
+          <td>{{ partido.equipo_a_nombre }}</td>
+          <td>{{ partido.equipo_b_nombre }}</td>
+          <td>{{ partido.goles_a }}</td>
+          <td>{{ partido.goles_b }}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="aprobarResultado(partido.id)">Aprobar</button>
+            <button class="btn btn-danger btn-sm" (click)="rechazarResultado(partido.id)">Rechazar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <app-alerts></app-alerts>

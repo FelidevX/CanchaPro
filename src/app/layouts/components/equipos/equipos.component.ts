@@ -14,7 +14,7 @@ export class EquiposComponent {
 
   equipos: Equipo[] = [];
   usuarioLogueado: boolean = false;
-  equiposConUsuario: number[] = []; // IDs de equipos donde el usuario ya es miembro
+  equiposConUsuario: number[] = [];
 
   equipo: Equipo = {
     nombre: '',
@@ -30,6 +30,16 @@ export class EquiposComponent {
       id_usuario: Number(localStorage.getItem('user_id')),
       id_equipo: 0
     };
+
+  equipoSeleccionado: any = null;
+  resultado = {
+    equipoRivalId: null,
+    golesFavor: 0,
+    golesContra: 0
+  };
+
+  idUsuario = Number(localStorage.getItem('user_id'));
+  miEquipoId: number | null = null;
 
   constructor(private equipoService: EquipoService) {}
 
@@ -191,12 +201,39 @@ export class EquiposComponent {
     });
   }
 
+  abrirModalResultado(equipo: any) {
+    this.equipoSeleccionado = equipo;
+    this.resultado = {
+      equipoRivalId: null,
+      golesFavor: 0,
+      golesContra: 0
+    };
+    const modal = new (window as any).bootstrap.Modal(document.getElementById('modalResultado'));
+    modal.show();
+  }
+
+  notificarResultado() {
+    this.equipoService.notificarResultado({
+      equipoId: this.equipoSeleccionado.id,
+      rivalId: this.resultado.equipoRivalId,
+      golesFavor: this.resultado.golesFavor,
+      golesContra: this.resultado.golesContra,
+      estado: 'pendiente'
+    }).subscribe(() => {
+      this.alerta.showAlert('Resultado enviado para aprobación.', 'success');
+    }, () => {
+      this.alerta.showAlert('Error al enviar el resultado.', 'danger');
+    });
+  }
+
   ngOnInit(): void {
     this.usuarioLogueado = !!localStorage.getItem('access_token');
     this.equipoService.obtenerEquipos().subscribe({
       next: (response) => {
         this.equipos = response;
         this.marcarEquiposConUsuario();
+        const equipoDueno = this.equipos.find(e => e.id_dueno === this.idUsuario);
+        this.miEquipoId = equipoDueno && equipoDueno.id !== undefined ? equipoDueno.id : null;
       },
       error: (err) => console.error('Error al cargar los equipos: ', err)
     });

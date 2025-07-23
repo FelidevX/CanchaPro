@@ -59,6 +59,12 @@
           </div>
           <button class="btn btn-dark w-100" (click)="solicitarUnirseEquipo(equipo.id!)" [disabled]="equiposConUsuario.includes(equipo.id || 0)">Solicitar Unirse</button>
           <button class="btn btn-primary w-100 mt-2" (click)="retarPartido(equipo.id!)">Retar a un partido</button>
+          <button
+            *ngIf="equipo.id === miEquipoId"
+            class="btn btn-warning w-100 mt-2"
+            (click)="abrirModalResultado(equipo)">
+            <i class="bi bi-flag"></i> Notificar resultado
+          </button>
         </div>
       </div>
     </div>
@@ -89,6 +95,43 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="canchaCrearConfirmada()">Crear Equipo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalResultado" tabindex="-1" aria-labelledby="modalResultadoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="modalResultadoLabel">Notificar Resultado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Equipo rival</label>
+          <select class="form-select" [(ngModel)]="resultado.equipoRivalId">
+            <option *ngFor="let rival of equipos" [value]="rival.id" [disabled]="rival.id === equipoSeleccionado?.id">
+              {{ rival.nombre }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <label class="form-label">Goles a favor</label>
+            <input type="number" class="form-control" [(ngModel)]="resultado.golesFavor" min="0">
+          </div>
+          <div class="col">
+            <label class="form-label">Goles en contra</label>
+            <input type="number" class="form-control" [(ngModel)]="resultado.golesContra" min="0">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success" (click)="notificarResultado()" data-bs-dismiss="modal">
+          Enviar Resultado
+        </button>
       </div>
     </div>
   </div>

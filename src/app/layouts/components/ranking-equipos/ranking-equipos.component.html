@@ -1,0 +1,75 @@
+<div class="container my-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold d-inline-block align-middle" style="font-size:2.5rem;">
+      <span class="me-2" style="color:gold;">
+        <i class="bi bi-trophy-fill" style="font-size:2.5rem; vertical-align:middle;"></i>
+      </span>
+      Ranking de Equipos
+    </h2>
+    <p class="text-secondary mt-2 mb-0" style="font-size:1.1rem;">
+      ¡Felicidades a los equipos con mejor rendimiento! <span style="color:#ffc107;">🥇</span> <span style="color:#adb5bd;">🥈</span> <span style="color:#cd7f32;">🥉</span>
+    </p>
+  </div>
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-success" role="status"></div>
+  </div>
+  <div *ngIf="!loading">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered rounded shadow-sm bg-white align-middle">
+        <thead class="table-success">
+          <tr>
+            <th class="text-center">#</th>
+            <th>Equipo</th>
+            <th class="text-center">Jugados</th>
+            <th class="text-center">Ganados</th>
+            <th class="text-center">Perdidos</th>
+            <th class="text-center">GF</th>
+            <th class="text-center">GC</th>
+            <th class="text-center">DIF</th>
+            <th class="text-center">% Victoria</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let equipo of ranking; let i = index"
+              [ngClass]="{
+                'table-warning': i === 0,
+                'table-secondary': i === 1,
+                'table-bronze': i === 2
+              }"
+              style="font-size:1.1rem;">
+            <td class="fw-bold text-center">
+              <ng-container [ngSwitch]="i">
+                <span *ngSwitchCase="0" style="font-size:1.5rem; color:gold;">🥇</span>
+                <span *ngSwitchCase="1" style="font-size:1.5rem; color:#adb5bd;">🥈</span>
+                <span *ngSwitchCase="2" style="font-size:1.5rem; color:#cd7f32;">🥉</span>
+                <span *ngSwitchDefault>{{ i + 1 }}</span>
+              </ng-container>
+            </td>
+            <td>
+              <span class="fw-bold">{{ equipo.nombre_equipo }}</span>
+              <span *ngIf="i === 0" class="badge bg-warning text-dark ms-2">TOP</span>
+            </td>
+            <td class="text-center">{{ equipo.partidos_jugados }}</td>
+            <td class="text-center text-success fw-bold">{{ equipo.partidos_ganados }}</td>
+            <td class="text-center text-danger">{{ equipo.partidos_perdidos }}</td>
+            <td class="text-center">{{ equipo.goles_favor }}</td>
+            <td class="text-center">{{ equipo.goles_contra }}</td>
+            <td class="text-center fw-bold" [ngClass]="{'text-success': equipo.diferencia > 0, 'text-danger': equipo.diferencia < 0}">
+              {{ equipo.diferencia }}
+            </td>
+            <td class="text-center fw-bold">{{ equipo.porcentaje }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="ranking.length === 0" class="text-center text-muted py-4">
+      No hay equipos registrados aún.
+    </div>
+  </div>
+</div>
+
+<style>
+.table-bronze {
+  background-color: #fff4e0 !important;
+}
+</style>

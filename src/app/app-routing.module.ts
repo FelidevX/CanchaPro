@@ -14,6 +14,7 @@ import { MiCuentaComponent } from './layouts/components/mi-cuenta/mi-cuenta.comp
 import { MiEquipoComponent } from './layouts/components/mi-equipo/mi-equipo.component';
 import { PagoExitosoComponent } from './layouts/components/pago-exitoso/pago-exitoso.component';
 import { AdminDashboardComponent } from './layouts/components/admin-dashboard/admin-dashboard.component';
+import { RankingEquiposComponent } from './layouts/components/ranking-equipos/ranking-equipos.component';
 
 const routes: Routes = [
   {
@@ -74,6 +75,10 @@ const routes: Routes = [
     path: 'manage',
     component: AdminDashboardComponent,
     canActivate: [AdminGuard]
+  },
+  {
+    path: 'ranking',
+    component: RankingEquiposComponent
   }
 ];
 
